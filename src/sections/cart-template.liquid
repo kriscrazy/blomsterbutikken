@@ -135,12 +135,15 @@
 
       <div class="cart__footer">
         <div class="grid">
-          {% if section.settings.cart_notes_enable %}
-            <div class="grid__item medium-up--one-half cart-note">
+          <div class="grid__item medium-up--one-half cart-note">
+            {%- include 'cart-options' -%}
+
+            {% if section.settings.cart_notes_enable %}
               <label for="CartSpecialInstructions" class="cart-note__label small--text-center">{{ 'cart.general.note' | t }}</label>
               <textarea name="note" id="CartSpecialInstructions" class="cart-note__input">{{ cart.note }}</textarea>
-            </div>
-          {% endif %}
+            {% endif %}
+          </div>
+
           <div class="grid__item text-right small--text-center{% if section.settings.cart_notes_enable %} medium-up--one-half{% endif %}">
             <div>
               <span class="cart__subtotal-title">{{ 'cart.general.subtotal' | t }}</span>
@@ -165,6 +168,28 @@
               {%- endif -%}
             {%- endcapture -%}
             <div class="cart__shipping rte">{{ taxes_shipping_checkout }}</div>
+
+            {% if section.settings.delivery_date_enable %}
+              <div class="cart-delivery">
+                <h5 class="h5">{{ section.settings.delivery_date_header }}</h5>
+                <select id="delivery-date-select" required name="attributes[Delivery Time]" >
+                  <option disabled selected>Vælg dato...</option>
+                  <option value="Hurtigst muligt">Hurtigst muligt</option>
+                </select>
+              </div>
+            {% endif %}
+
+            <div class="terms-confirm">
+            {%- if settings.agree-link or settings.agree-linktwo != blank -%}
+            <p style="float: none; text-align: right; clear: both; margin: 10px 0 20px;">
+            <input style="float:none; vertical-align: middle;" type="checkbox" id="agree" />
+            <label style="display:inline; vertical-align: middle; float:none" for="agree">
+            {% if settings.agree-link != blank %}{{ settings.agree-title }} <a href="{{ settings.agree-link }}">{{ settings.agree-linktitle }}</a>{%- endif -%}
+            {%- if settings.agree-linktwo != blank -%}{{ settings.agree-titletwo }} <a href="{{ settings.agree-linktwo }}">{{ settings.agree-linktwotitle }}</a>{%- endif -%}.
+            </label>
+            </p>
+          </div>
+            {% endif %}
             <div class="cart__submit-controls">
               <a href="collections/all" class="btn btn--secondary cart__continue small--hide cart__submit-control" >
                 {{ 'cart.general.continue_shopping' | t }}
@@ -176,10 +201,6 @@
                 class="btn btn--small-wide cart__submit cart__submit-control"
                 value="{{ 'cart.general.checkout' | t }}">
             </div>
-
-            {% if additional_checkout_buttons %}
-              <div class="additional-checkout-buttons">{{ content_for_additional_checkout_buttons }}</div>
-            {% endif %}
           </div>
         </div>
       </div>
@@ -195,6 +216,75 @@
     </div>
   {% endif %}
 </div>
+
+{% capture weekdaysClosed %}
+{% unless section.settings.delivery_date_mon_enable %}0,{% endunless %}
+{% unless section.settings.delivery_date_tue_enable %}1,{% endunless %}
+{% unless section.settings.delivery_date_wed_enable %}2,{% endunless %}
+{% unless section.settings.delivery_date_thu_enable %}3,{% endunless %}
+{% unless section.settings.delivery_date_fri_enable %}4,{% endunless %}
+{% unless section.settings.delivery_date_sat_enable %}5,{% endunless %}
+{% unless section.settings.delivery_date_sun_enable %}6,{% endunless %}
+{% endcapture %}
+
+<script type="text/javascript">
+
+  moment.locale('da');
+
+  var deliveryDatesClosed = {{ section.settings.delivery_dates_closed | newline_to_br | strip_newlines | split: '<br />' | json }};
+  var deliveryDatesClosed = deliveryDatesClosed.map(d => d.replace(/\//g,''));
+
+  var deliveryWeekdaysClosed = {{ weekdaysClosed | strip_newlines | split: ',' | json }};
+
+  var minDate = moment();
+  var maxDate = moment().add(1, 'months');
+
+  var enumerateDaysBetweenDates = function(startDate, endDate) {
+    var dates = [];
+
+    var currDate = moment(startDate).startOf('day').subtract(1, 'days');
+    var lastDate = moment(endDate).startOf('day').add(1, 'days');
+
+    while(currDate.add(1, 'days').diff(lastDate) < 0) {
+      dates.push(currDate.clone());
+    }
+
+    return dates;
+  };
+
+
+  function isAvailableDate(date) {
+    var dateFormatted = date.format('DDMMYYYY');
+    var dateDay = date.format('e');
+
+    if (deliveryDatesClosed.findIndex(x => x == dateFormatted) >= 0 || deliveryWeekdaysClosed.findIndex(x => x == dateDay) >= 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  var dates = enumerateDaysBetweenDates(minDate, maxDate);
+
+  for (var i = 0; i < dates.length; i++) {
+    var newOpt = document.createElement('option');
+
+    $(newOpt).prop('value', dates[i].format('D. MMM YYYY'));
+    $(newOpt).prop('text', dates[i].format('dddd D. MMM YYYY'));
+
+    if (!isAvailableDate(dates[i])) {
+      $(newOpt).attr('disabled', true);
+    }
+
+    $('#delivery-date-select').append(newOpt);
+  }
+
+  // $('#delivery-date-select').change(function(e) {
+  //   var newDate = $(this).val();
+  //   $('#CartSpecialInstructions').val(newDate);
+  // })
+
+</script>
 
 {% schema %}
   {
@@ -221,6 +311,98 @@
           "pt-BR": "Ativar observações sobre o carrinho"
         },
         "default": false
+      },
+      {
+        "type": "header",
+        "content": "Delivery date"
+      },
+      {
+        "type": "checkbox",
+        "id": "delivery_date_enable",
+        "label": "Enable delivery date picker"
+      },
+      {
+        "type": "text",
+        "id": "delivery_date_header",
+        "label": "Delivery date header"
+      },
+      {
+        "type": "paragraph",
+        "content": "Open on weekdays:"
+      },
+      {
+        "type": "checkbox",
+        "id": "delivery_date_mon_enable",
+        "label": "Monday"
+      },
+      {
+        "type": "checkbox",
+        "id": "delivery_date_tue_enable",
+        "label": "Tuesday"
+      },
+      {
+        "type": "checkbox",
+        "id": "delivery_date_wed_enable",
+        "label": "Wednesday"
+      },
+      {
+        "type": "checkbox",
+        "id": "delivery_date_thu_enable",
+        "label": "Thursday"
+      },
+      {
+        "type": "checkbox",
+        "id": "delivery_date_fri_enable",
+        "label": "Friday"
+      },
+      {
+        "type": "checkbox",
+        "id": "delivery_date_sat_enable",
+        "label": "Saturday"
+      },
+      {
+        "type": "checkbox",
+        "id": "delivery_date_sun_enable",
+        "label": "Sunday"
+      },
+      {
+        "type": "textarea",
+        "id": "delivery_dates_closed",
+        "label": "Exeptions to above",
+        "info": "Holidays etc. write in format DD/MM/YYYY each on a new line"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "option",
+        "name": "Option",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "product",
+            "id": "product",
+            "label": "Product",
+            "info": "Product to be added to card if option selected. Choose none if option is free"
+          },
+          {
+            "type": "header",
+            "content": "Comment box"
+          },
+          {
+            "type": "checkbox",
+            "id": "enable_comment",
+            "label": "Enable"
+          },
+          {
+            "type": "text",
+            "id": "comment_placeholder",
+            "label": "Placeholder"
+          }
+        ]
       }
     ]
   }

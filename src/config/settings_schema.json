@@ -703,5 +703,50 @@
         }
       }
     ]
+  },
+  {
+    "name": "Terms accept cart page",
+    "settings": [
+      {
+        "type": "text",
+        "label": "Terms agree teaser title",
+        "id": "agree-title",
+        "default": "I agree with the"
+      },
+      {
+        "type": "page",
+        "label": "Terms agree page",
+        "id": "agree-link"
+      },
+      {
+        "type": "text",
+        "label": "Terms agree page title",
+        "id": "agree-linktitle",
+        "default": "Terms and conditions"
+      },
+      {
+        "type": "text",
+        "label": "Cookie agree teaser title",
+        "id": "agree-titletwo",
+        "default": "and our"
+      },
+      {
+        "type": "page",
+        "label": "Cookie law page",
+        "id": "agree-linktwo"
+      },
+      {
+        "type": "text",
+        "label": "Cookie agree page title",
+        "id": "agree-linktwotitle",
+        "default": "Cookie law"
+      },
+      {
+        "type": "text",
+        "label": "Agree prompt - error meassage",
+        "id": "agree-prompt",
+        "default": "You must agree with the terms and conditions of sales to check out."
+      }
+    ]
   }
 ]

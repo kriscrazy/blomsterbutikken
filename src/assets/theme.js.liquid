@@ -3340,6 +3340,52 @@ theme.SlideshowSection.prototype = _.assignIn(
 );
 
 
+theme.homeInstagramFeed = function () {
+    var instaFeed = $('.js-home-insta');
+
+    instaFeed.each(function(i) {
+        var thisToken = $(instaFeed[i]).attr('data-insta-token');
+        var thisUserId = thisToken.split('.')[0];
+        var thisFeedCount = $(instaFeed[i]).attr('data-insta-count');
+
+        function successFunc(data) {
+            constructFeed(data, this.indexValue);
+
+            function constructFeed(data, feedCount) {
+                var thisFeed = $('.js-home-insta')[feedCount];
+                var thisList = $(thisFeed).find('.js-home-insta-list');
+                var feed = data.data;
+                var userName = data.data[0].user.username;
+
+
+                //empty list element so when editing inside sections images don't get doubled
+                $(thisList).empty();
+
+                //ceate images in list element
+                for (var i = 0; i < thisFeedCount; i++) {
+                    var image = feed[i].images.standard_resolution.url;
+                    var url = feed[i].link;
+                    var instacaption = feed[i].tags;
+                    $(thisList).append('<div class="grid__item home-insta__item"><a href="'+ url +'" target="_blank" title="'+ instacaption +'"><div class="o-ratio"><div class="o-ratio__content"><div style="background-image:url('+ image +')" class="home-insta__img"></div></div></div></a>');
+                }
+            }
+        }
+        //check token is entered
+        if (thisToken !== '') {
+            //get feed via ajax
+            $.ajax({
+                url: 'https://api.instagram.com/v1/users/'+ thisUserId +'/media/recent/?count='+ thisFeedCount +'&access_token=' + thisToken,
+                dataType: 'jsonp',
+                crossDomain: true,
+                indexValue: i,
+                success: successFunc
+            });
+        }
+
+    });
+};
+
+
 $(document).ready(function() {
   var sections = new theme.Sections();
 
@@ -3354,6 +3400,7 @@ $(document).ready(function() {
 });
 
 theme.init = function() {
+  theme.homeInstagramFeed();
   theme.customerTemplates.init();
 
   // Theme-specific selectors to make tables scrollable
@@ -3400,3 +3447,21 @@ theme.init = function() {
 };
 
 $(theme.init);
+
+
+$(document).ready(function() {
+  $('body').on('click', '[name="checkout"], [name="goto_pp"], [name="goto_gc"]', function() {
+    console.log($('#delivery-date-select').val());
+    if (!$('#delivery-date-select').val()) {
+      alert("Venligst, vælg en leveringsdato.");
+      return false;
+    }
+    else if(!$('#agree').is(':checked')) {
+      alert("Du skal godkende vores salgs og leveringsbetingelser for at forsætte");
+      return false;
+    }
+    else {
+      $(this).submit();
+    }
+  });
+});

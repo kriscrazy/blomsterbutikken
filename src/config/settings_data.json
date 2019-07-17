@@ -4,7 +4,7 @@
     "color_body_text": "#69727b",
     "color_sale_text": "#557b97",
     "color_borders": "#e8e9eb",
-    "color_button": "#557b97",
+    "color_button": "#9841ab",
     "color_button_text": "#fff",
     "color_small_button_text_border": "#3d4246",
     "color_text_field": "#fff",
@@ -31,6 +31,13 @@
     "social_youtube_link": "",
     "social_vimeo_link": "",
     "favicon": "",
+    "agree-title": "Jeg godkender jeres",
+    "agree-link": "salgs-og-leveringsbetingelser",
+    "agree-linktitle": "salgs og leveringsbetingelser",
+    "agree-titletwo": "",
+    "agree-linktwo": "",
+    "agree-linktwotitle": "",
+    "agree-prompt": "Du skal godkende vores salgs og leveringsbetingelser for at check out",
     "checkout_header_image": "",
     "checkout_logo_image": "",
     "checkout_logo_position": "left",
@@ -55,9 +62,9 @@
           "main_linklist": "main-menu",
           "message": true,
           "home_page_only": true,
-          "message_text": "Vi bringer blomster ud hver dag i Helsingør og omegn fra kun kr. 35,-",
-          "message_link": "",
-          "color_bg": "#595961",
+          "message_text": "VI BRINGER BLOMSTER UD HVER DAG I HELE KOMMUNEN",
+          "message_link": "shopify://pages/blomsterlevering",
+          "color_bg": "#2be3dc",
           "color_text": "#fff"
         }
       },
@@ -69,7 +76,7 @@
           "title": "",
           "text": "",
           "hero_size": "medium",
-          "text_size": "large",
+          "text_size": "medium",
           "button_label": "",
           "button_link": ""
         }
@@ -155,14 +162,68 @@
           "show_vendor": false,
           "enable_zoom": true,
           "enable_payment_button": false,
-          "show_share_buttons": true
+          "show_share_buttons": true,
+          "grid": 4,
+          "related_title": "Andre så også på"
+        }
+      },
+      "cart-template": {
+        "type": "cart-template",
+        "blocks": {
+          "1538124702628": {
+            "type": "option",
+            "settings": {
+              "title": "Ja, tak. Buketten/ pakken må sættes ved døren eller afleveres hos naboen hvis jeg ikke er hjemme (på eget ansvar)",
+              "product": "",
+              "enable_comment": false,
+              "comment_placeholder": ""
+            }
+          },
+          "1538124727265": {
+            "type": "option",
+            "settings": {
+              "title": "Ja, tak. Jeg vil gerne købe et kort",
+              "product": "kort",
+              "enable_comment": true,
+              "comment_placeholder": "Besked på kort"
+            }
+          }
+        },
+        "block_order": [
+          "1538124702628",
+          "1538124727265"
+        ],
+        "settings": {
+          "cart_notes_enable": true,
+          "delivery_date_enable": true,
+          "delivery_date_header": "Dato for levering:",
+          "delivery_date_mon_enable": true,
+          "delivery_date_tue_enable": true,
+          "delivery_date_wed_enable": true,
+          "delivery_date_thu_enable": true,
+          "delivery_date_fri_enable": true,
+          "delivery_date_sat_enable": true,
+          "delivery_date_sun_enable": false,
+          "delivery_dates_closed": "05/05/2019\n19/05/2019\n01/01/2019\n24/12/2018\n25/12/2018\n23/12/2018"
+        }
+      },
+      "1538404309173": {
+        "type": "instagram-feed",
+        "settings": {
+          "title": "Følg",
+          "profile-title": "Blomsterbutikken",
+          "profile-link": "https://www.instagram.com/blomsterbutikken/",
+          "title-two": "på Instagram",
+          "feed_token": "1724760405.1677ed0.a56f19c4eb5e4b2a971ddd8d36c4f542",
+          "posts_limit": "4"
         }
       }
     },
     "content_for_index": [
       "hero",
       "1535204768815",
-      "featured-collections"
+      "featured-collections",
+      "1538404309173"
     ]
   },
   "presets": {

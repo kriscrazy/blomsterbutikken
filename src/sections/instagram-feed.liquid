@@ -1,0 +1,127 @@
+{%- assign grid_item_width = '25%' -%}
+{% if section.settings.posts_limit == '4' %}
+      {%- assign grid_item_width = '25%' -%}
+{% elsif section.settings.posts_limit ==  '6' %}
+      {% assign grid_item_width = '16.66667%' %}
+{% elsif section.settings.posts_limit == '8' %}
+      {% assign grid_item_width = '12.5%' %}
+{% endif %}
+<style>
+
+.home-insta__item {
+  width: {{ grid_item_width }};
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+@media only screen and (max-width: 749px) {
+  .home-insta__item {
+    width: 50%;
+    display: inline-block;
+  }
+}
+</style>
+
+<section class="section home-instagram-holder insta-color index-section" data-section-id="{{ section.id }}" data-section-type="home-instagram">
+    <div class="page-width">
+      {% if section.settings.title != blank %}
+        <div class="section-header insta-header text-center">
+          <h2>{{ section.settings.title }}
+          {% if section.settings.profile-title != blank %}
+          <a class="profile-link" target="_blank" href="{{ section.settings.profile-link }}">{{ section.settings.profile-title }}</a>
+          {% endif %}
+          {% if section.settings.title-two != blank %}
+          {{ section.settings.title-two }}
+          {% endif %}
+          </h2>
+        </div>
+      {% endif %}
+            <div class="grid home-insta home-insta--{{ section.id }} home-insta--{{ section.settings.posts_limit }} js-home-insta" data-insta-token="{{ section.settings.feed_token }}" data-insta-count="{{ section.settings.posts_limit }}">
+                {% if section.settings.feed_token != blank %}
+                    <div class="home-insta__items js-home-insta-list">
+                        <!-- Instagram feed after JS-->
+                    </div>
+                {% else %}
+
+                  <div class="grid grid--uniform">
+                        {% for i in (1..section.settings.posts_limit) %}
+                            <div class="grid__item home-insta__item">
+                                <div class="o-ratio">
+                                    <div class="o-ratio__content">
+                                        {% capture current %}{% cycle 1, 2, 3, 4 %}{% endcapture %}
+                                        {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                  </div>
+                {% endif %}
+
+
+            </div>
+
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Instagram feed",
+    "class": "index-section index-section--flush",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Follow"
+        },
+        {
+            "type": "text",
+            "id": "profile-title",
+            "label": "Profile title"
+        },
+        {
+            "type": "text",
+            "id": "profile-link",
+            "label": "Profile link"
+        },
+        {
+            "type": "text",
+            "id": "title-two",
+            "label": "Heading after profile link ",
+            "default": "on Instagram"
+        },
+        {
+            "type": "text",
+            "id": "feed_token",
+            "label": "Instagram Access Token",
+            "info": "[Get your Instagram Access Token](http://instagram.safeasmilk.co/). For more information [click here](https://safeasmilk.zendesk.com/hc/en-gb/articles/115001245389)."
+        },
+        {
+            "type": "select",
+            "id": "posts_limit",
+            "label": "Posts",
+            "options": [
+                {
+                    "value": "4",
+                    "label": "4"
+                },
+                {
+                    "value": "6",
+                    "label": "6"
+                },
+                {
+                    "value": "8",
+                    "label": "8"
+                }
+            ],
+            "default": "4"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Instagram feed",
+            "category": "Social"
+        }
+    ]
+}
+{% endschema %}

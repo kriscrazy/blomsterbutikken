@@ -216,6 +216,48 @@
       {{ 'products.product.back_to_collection' | t: title: collection.title }}
     </a>
   </div>
+
+<hr>
+
+  <div class="page-width">
+    {% if section.settings.related_title != blank %}
+      <h3 class="text-center">{{ section.settings.related_title }}</h3>
+    {% endif -%}
+
+    {% case section.settings.grid %}
+      {% when 2 %}
+        {%- assign max_height = 530 -%}
+        {%- assign grid_item_width = 'medium-up--one-half' -%}
+      {% when 3 %}
+        {%- assign max_height = 345 -%}
+        {%- assign grid_item_width = 'small--one-half medium-up--one-third' -%}
+      {% when 4 %}
+        {%- assign max_height = 250 -%}
+        {%- assign grid_item_width = 'small--one-half medium-up--one-quarter' -%}
+      {% when 5 %}
+        {%- assign max_height = 195 -%}
+        {%- assign grid_item_width = 'small--one-half medium-up--one-fifth' -%}
+    {% endcase %}
+
+    {% assign product_original = product %}
+    <ul class="grid grid--uniform{% if collection.products_count > 0 %} grid--view-items{% endif %}">
+      {% assign count = 0 %}
+      {% for product in collection.products %}
+        {% if count == 4 %}
+          {% break %}
+        {% endif %}
+
+        {% if product.handle != product_original.handle %}
+          <li class="grid__item grid__item--{{section.id}} {{ grid_item_width }}">
+            {% include 'product-card-grid' %}
+          </li>
+
+          {% assign count = count | plus: 1 %}
+        {% endif %}
+      {% endfor %}
+    </ul>
+    {% assign product = product_original %}
+  </div>
 {% endif %}
 
 {% unless product == empty %}
@@ -392,6 +434,32 @@
           "pt-BR": "Exibir botões de compartilhamento em redes sociais"
         },
         "default": true
+      },
+	  {
+        "type": "header",
+        "content": "Related products"
+      },
+      {
+        "type": "range",
+        "id": "grid",
+        "label": {
+          "en": "Products per row (grid only)",
+          "de": "Produkte per Reihe (nur Raster)",
+          "fr": "Produits par rangée (grille uniquement)",
+          "it": "Prodotti per riga (solo griglia)",
+          "ja": "行あたりの商品数（グリッドのみ）",
+          "es": "Productos por fila (solo cuadrícula)",
+          "pt-BR": "Produtos por linha (somente grade)"
+        },
+        "default": 4,
+        "min": 2,
+        "max": 5,
+        "step": 1
+      },
+      {
+        "type": "text",
+        "id": "related_title",
+        "label": "Title"
       }
     ]
   }

@@ -80,6 +80,9 @@
     "breadcrumbs": {
       "home": "Hjem",
       "home_link_title": "Tilbage til forsiden"
+    },
+    "payment": {
+      "method": "Betalingsmethode"
     }
   },
   "cart": {
@@ -102,7 +105,9 @@
       "to_cart": "Se kurv",
       "cart_subtotal": "Subtotal",
       "taxes_and_shipping_policy_at_checkout_html": "Taxes and <a href=\"{{ link }}\">shipping calculated<\/a> at checkout",
-      "taxes_included_and_shipping_policy_html": "Tax included. <a href=\"{{ link }}\">Shipping calculated<\/a> at checkout."
+      "taxes_included_and_shipping_policy_html": "Tax included. <a href=\"{{ link }}\">Shipping calculated<\/a> at checkout.",
+      "taxes_and_shipping_at_checkout": "Moms og fragtomkostninger bliver udregnet i checkout",
+      "taxes_included_but_shipping_at_checkout": "Moms og fragtomkostninger bliver udregnet i checkout"
     },
     "saw": {
       "net_terms": "Ved at klikke 'Godkend køb', accepterer du betalingsfrist på {{ days }} dage",
@@ -145,7 +150,8 @@
       "date_descending": "Dato, ny til ældst",
       "date_ascending": "Dato, ældst til ny",
       "browse": "Sorter efter",
-      "all_tags": "Alt"
+      "all_tags": "Alt",
+      "warning_message": "Vælg et filter"
     },
     "filters": {
       "title_tags": "Filter",
@@ -329,7 +335,10 @@
       "view_cart": "Se kurv",
       "continue_shopping": "Fortsæt med at shoppe",
       "sale_price": "Udsalgspris",
-      "vendor": "Mærke"
+      "vendor": "Mærke",
+      "quantity_minimum_message": "Du skal som minimum vælge 1 produkt",
+      "include_taxes": "Moms er inkluderet",
+      "shipping_policy_html": "<a href=\"{{ link }}\">Forsendelse udregnet<\/a> i checkout."
     },
     "general": {
       "from_html": "Fra {{ price }}",

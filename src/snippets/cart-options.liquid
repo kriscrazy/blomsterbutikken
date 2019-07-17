@@ -1,0 +1,77 @@
+{%- if section.blocks != blank -%}
+  <div class="cart-options">
+    {%- for block in section.blocks -%}
+      {%- assign option_product = all_products[block.settings.product].first_available_variant -%}
+      {%- assign exists = false -%}
+      {%- for attribute in cart.attributes -%}
+        {%- if attribute.first == block.settings.title -%}
+          {%- assign exists = true -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      <div class="cart-options__option" {{block.shopify_attributes}} >
+        <label class="cart-options__checkbox">
+          <input type="checkbox"
+                 data-label="{{ block.settings.title | escape }}"
+                 data-product="{{ option_product.id }}"
+                 {% if exists %}checked{% endif %}>
+          {{ block.settings.title }}
+
+          {%- if option_product != blank -%}
+            <b>({{ option_product.price | money }})</b>
+          {%- endif -%}
+        </label>
+
+        {%- if block.settings.enable_comment -%}
+          {%- capture comment_name -%}{{ block.settings.title | escape }} (Comment){% endcapture %}
+          <label for="{{ block.id }}" class="cart-note__label small--text-center">{{ block.settings.comment_placeholder }}</label>
+          <textarea name="attributes[{{comment_name}}]" id="{{ block.id }}" class="cart-note__input" >{{ cart.attributes[comment_name] }}</textarea>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+
+  <script>
+    var options = document.querySelectorAll('.cart-options__option input');
+
+    for (i = 0; options.length > i; i++) {
+      var option = options[i];
+
+      option.addEventListener('change', function (event) {
+        var target = event.currentTarget;
+
+        // Set XML Request
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/cart/update.js', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onreadystatechange = function () {
+          location.reload();
+        };
+
+        // Set data
+        var data = {
+          updates: {},
+          attributes: {}
+        };
+
+        if (target.checked === true) {
+          if (target.dataset.product) {
+            data.updates[target.dataset.product] = 1;
+          }
+
+          data.attributes[target.dataset.label] = true;
+        } else {
+          if (target.dataset.product) {
+            data.updates[target.dataset.product] = 0;
+          }
+
+          data.attributes[target.dataset.label] = '';
+        }
+
+        xhr.send(JSON.stringify(data));
+      });
+    }
+  </script>
+{%- endif -%}
