@@ -1,0 +1,89 @@
+{%- assign grid_item_width = '25%' -%}
+{% if section.settings.posts_limit == '4' %}
+      {%- assign grid_item_width = '25%' -%}
+{% elsif section.settings.posts_limit ==  '6' %}
+      {% assign grid_item_width = '16.66667%' %}
+{% elsif section.settings.posts_limit == '8' %}
+      {% assign grid_item_width = '12.5%' %}
+{% endif %}
+<style>
+
+.home-insta__item {
+  width: {{ grid_item_width }};
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+@media only screen and (max-width: 749px) {
+  .home-insta__item {
+    width: 50%;
+    display: inline-block;
+  }
+}
+</style>
+
+<section class="section home-instagram-holder insta-color index-section" data-section-id="{{ section.id }}" data-section-type="home-instagram">
+    <div class="showcase-page-width">
+      {% if section.settings.title != blank %}
+        <div class="section-header insta-header text-center">
+          <h2>{{ section.settings.title }}
+          {% if section.settings.profile-title != blank %}
+          <a class="profile-link" target="_blank" href="{{ section.settings.profile-link }}">{{ section.settings.profile-title }}</a>
+          {% endif %}
+          {% if section.settings.title-two != blank %}
+          {{ section.settings.title-two }}
+          {% endif %}
+          </h2>
+        </div>
+      {% endif %}
+      {%- if section.settings.snpt_code != blank -%}
+      <div class="Snpt__Embed {% if section.settings.container == false %}Snpt__Container{% endif %}">
+      {{section.settings.snpt_code}}
+      </div>
+      {%- endif -%}
+
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Showcase instagram feed",
+    "class": "index-section index-section--flush",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Follow"
+        },
+        {
+            "type": "text",
+            "id": "profile-title",
+            "label": "Profile title"
+        },
+        {
+            "type": "text",
+            "id": "profile-link",
+            "label": "Profile link"
+        },
+        {
+            "type": "text",
+            "id": "title-two",
+            "label": "Heading after profile link ",
+            "default": "on Instagram"
+        },
+        {
+          "type": "text",
+          "id": "snpt_code",
+          "label": "Showcase code",
+          "info": "Copy code from your Showcase gallery install page [Find Showcase code](https://showcase.abovemarket.com/galleries)"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Showcase instagram feed",
+            "category": "Social"
+        }
+    ]
+}
+{% endschema %}

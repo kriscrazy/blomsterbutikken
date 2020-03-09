@@ -6434,3 +6434,146 @@ section#homepage-instagram {
 .cart-delivery {
   margin-bottom: $grid-gutter;
 }
+
+
+/**
+ * ----------------------------------------------------------------------------
+ * Instagram feed
+ * ----------------------------------------------------------------------------
+ */
+
+
+// SNPT Instagram Gallery
+.Snpt__Embed {
+   overflow: hidden;
+  .snptwdgt-container {
+    .snptwdgt-container-liner {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+    .snptwdgt-rtd__fotr {
+      margin: 0 !important;
+        visibility: hidden;
+    }
+  }
+}
+
+.Snpt__Container {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.snpt-share-holder {
+  .snpt-logo-lmp {
+    visibility: hidden;
+  }
+}
+// SNPT Instagram Gallery popup modal
+.ng-scope {
+   .hotspot-modal--frontend {
+     .modal-dialog {
+       .chevron {
+        top: 50%;
+        transform: translateY(-50%);
+       }
+       .snpt-product-images-slide {
+         img {
+            border-bottom-left-radius: 0px !important;
+            border-top-left-radius: 0px !important;
+            width: 100%;
+            }
+          }
+         .modal-content {
+          border-radius: 0 !important;
+        }
+    }
+  }
+}
+
+// Showcase instagram app
+.Snpt__Embed {
+  .showcase-gallery {
+    padding-left: 0;
+    padding-right: 0;
+    .showcase-slider {
+      .showcase-track {
+      padding-left: 0;
+      padding-right: 0;
+      }
+      .next {
+        margin-right: 20px;
+        .fa {
+          &:before {
+            left: 18px;
+          }
+        }
+      }
+      .prev {
+        margin-left: 20px;
+        .fa {
+          &:before {
+            left: 15px;
+          }
+        }
+      }
+      .showcase-slider-control {
+        background: none;
+        font-size: 18px;
+        opacity: 1;
+        visibility: visible;
+        width: 50px !important;
+        z-index: 2;
+        .fa {
+        box-shadow: 0 0 0 1px rgba(0,0,0,0.15) inset;
+        width: 45px;
+        height: 45px;
+        border: none;
+        border-radius: 50%;
+        position: relative;
+        background: white;
+          &:before {
+            position: absolute;
+            top: 14px;
+          }
+        }
+      }
+      .disabled {
+        opacity: 0 !important;
+      }
+    }
+  }
+}
+
+// Showcase instagram app popup modal
+#showcase-viewer {
+  .showcase-viewer-page {
+    .showcase-viewer-branding {
+      display: none;
+    }
+    .showcase-viewer-post-info-products-item-info-price {
+      display: none;
+    }
+    .bubble-price {
+      display: none;
+    }
+    .showcase-viewer-post-follow {
+      font-weight: bold;
+    }
+  }
+}
+
+.showcase-page-width {
+  @include clearfix();
+  max-width: $width-site - 30px;
+  margin: 0 auto;
+}
+
+.showcase-page-width {
+  padding-left: $gutter-site - 30px;
+  padding-right: $gutter-site - 30px;
+
+  @include media-query($small) {
+    padding-left: $gutter-site-mobile - 30px;
+    padding-right: $gutter-site-mobile - 30px;
+  }
+}
