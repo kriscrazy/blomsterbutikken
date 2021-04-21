@@ -242,10 +242,10 @@
   var enumerateDaysBetweenDates = function(startDate, endDate) {
     var dates = [];
 
-    var currDate = moment(startDate).startOf('day').subtract(1, 'days');
-    var lastDate = moment(endDate).startOf('day').add(1, 'days');
+    var currDate = moment(startDate).startOf('hour').subtract(13, 'hours');
+    var lastDate = moment(endDate).startOf('hour').add(11, 'hours');
 
-    while(currDate.add(1, 'days').diff(lastDate) < 0) {
+    while(currDate.add(24, 'hours').diff(lastDate) < 0) {
       dates.push(currDate.clone());
     }
 

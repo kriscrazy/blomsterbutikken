@@ -1,6 +1,6 @@
 development:
   password: a1e2771931b077f218dc21ae50d5867c
-  theme_id: "79066431599"
+  theme_id: "120234377327"
   store: blomsterbutikken.myshopify.com
   ignore_files:
     - config/settings_data.json
@@ -8,7 +8,7 @@ development:
     - locales/*.json
 com:
   password: a1e2771931b077f218dc21ae50d5867c
-  theme_id: "79066431599"
+  theme_id: "120234377327"
   store: blomsterbutikken.myshopify.com
   ignore_files:
     - config/settings_data.json

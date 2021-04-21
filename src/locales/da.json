@@ -93,7 +93,7 @@
       "subtotal": "Subtotal ",
       "savings": "Du gemmer ",
       "shipping_at_checkout": "Fragt og moms udregnes ved kassen",
-      "update": "Update",
+      "update": "Opdatér",
       "checkout": "Til kassen",
       "empty": "Din indkøbskurv er i øjeblikket tom. ",
       "edit": "Rediger ",
@@ -121,7 +121,8 @@
       "price": "Pris ",
       "quantity": "Antal ",
       "total": "Total",
-      "add_note": "Tilføj en note"
+      "add_note": "Tilføj en note",
+      "saturday": "Lørdag (inden kl. 11)"
     }
   },
   "collections": {
@@ -235,7 +236,7 @@
       "cancelled_reason": "Årsag: {{ reason }} ",
       "billing_address": "Betalingsadresse ",
       "payment_status": "Betalingsstatus ",
-      "shipping_address": "Forsendelsesadresse ",
+      "shipping_address": "Leveringsadresse ",
       "fulfillment_status": "Opfyldelses status ",
       "discount": "Rabat",
       "shipping": "Forsendelse",
@@ -401,13 +402,22 @@
     "checkout": {
       "shipping": {
         "shipping_line_phone_label": "Mobil nummer (krævet)  ",
-        "shipping_line_phone": "Din fragtleverandør bruger muligvis dette nummer til at kontakte dig."
+        "shipping_line_phone": "Din fragtleverandør bruger muligvis dette nummer til at kontakte dig.",
+        "shipping_method_title": "VIGTIGT: Husk at markere levering, hvis varen skal sendes"
       },
       "newsletter": {
         "subscription_checkbox_label": "Tilmeld dig vores nyhedsbrev"
       },
       "order_summary": {
         "taxes_label": "Moms"
+      },
+      "contact": {
+        "shipping_address_title": "Hvem skal modtage buketten eller pakken? ",
+        "phone_placeholder": "Modtagerens telefonnummer",
+        "phone_label": "Modtagerens telefonnummer"
+      },
+      "payment": {
+        "same_billing_address_label": "Samme adresse som Leveringsadressen"
       }
     }
   },
